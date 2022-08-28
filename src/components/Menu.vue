@@ -1,0 +1,93 @@
+<template>
+  <div
+    class="menu"
+    @click="isOpen = true"
+  >
+    <IconBase
+      name="menu"
+      class="menu__icon"
+      :view-box-size="[24, 16]"
+      :width="24"
+      :height="16"
+      fill="#6C63FF"
+    />
+  </div>
+
+  <Sidebar
+    :is-open="isOpen"
+    @update:is-open="isOpen = $event"
+  >
+    <template #default>
+      <div class="flex flex-col w-full pt-10">
+        <h2 class="text-2xl font-bold text-black text-center">SQA DAYS <span class="text-primary">/</span> 30</h2>
+
+        <div class="flex flex-col mt-10 pl-6 w-full">
+          <Button
+            v-for="(item, index) in tabs"
+            :key="index"
+            :classes="[
+              'button button_empty rounded-l-3xl rounded-r-none justify-start pl-5',
+              { 'menu__button_active': selectedTabId === item.id }
+            ]"
+            @click="selectTab(item.id)"
+          >
+            <template #content>
+              {{ item.name }}
+            </template>
+          </Button>
+        </div>
+
+        <div class="flex flex-col mt-10 pl-6 w-full">
+          <Button
+            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"
+            value="Настройки"
+          />
+
+          <Button
+            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"
+            value="Выйти"
+          />
+        </div>
+      </div>
+    </template>
+  </Sidebar>
+</template>
+
+<script>
+import Button from '@/components/UI/Button'
+import IconBase from '@/components/Icons/IconBase'
+import Sidebar from '@/components/UI/Sidebar'
+
+import { mapActions, mapMutations, mapState } from 'vuex'
+
+export default {
+  name: 'Menu',
+  components: {
+    Button,
+    IconBase,
+    Sidebar
+  },
+  data () {
+    return {
+      isOpen: false
+    }
+  },
+  computed: {
+    ...mapState([
+      'tabs',
+      'selectedTabId'
+    ])
+  },
+  async mounted () {
+    const tabs = await this.getTabs()
+    this.setTabs(tabs)
+  },
+  methods: {
+    ...mapActions(['getTabs']),
+    ...mapMutations([
+      'setTabs',
+      'selectTab'
+    ])
+  }
+}
+</script>

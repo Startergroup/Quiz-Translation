@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap');
+
+@import './components/button';
+@import './components/card';
+@import './components/cinema-mode';
+@import './components/input';
+@import './components/menu';
+@import './components/schedule';
+@import './components/sidebar';
+@import './components/switch';
+@import './components/video';
+
+@import './global';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

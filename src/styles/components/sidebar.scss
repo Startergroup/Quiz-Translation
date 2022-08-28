@@ -1,0 +1,48 @@
+.sidebar {
+  &__wrapper {
+    @apply
+      fixed
+      top-0
+      w-full
+      h-full
+      bg-white
+      transition
+      ease-out
+      duration-300
+      transform
+      z-30
+    ;
+
+    &_right {
+      @apply
+        right-0
+        translate-x-full
+        rounded-l-xl
+      ;
+    }
+
+    &_left {
+      @apply
+        left-0
+        -translate-x-full
+        rounded-r-xl
+      ;
+    }
+
+    &_active {
+      @apply translate-x-0;
+    }
+  }
+
+  &__layout {
+    @apply
+      fixed
+      left-0
+      top-0
+      h-full
+      w-full
+      z-20
+    ;
+    background: rgba(54, 54, 54, .80);
+  }
+}

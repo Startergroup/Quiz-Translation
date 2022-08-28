@@ -1,0 +1,76 @@
+.menu {
+  @apply
+    fixed
+    left-10
+    top-10
+    flex
+    items-center
+    justify-center
+    rounded-full
+    bg-white
+    w-12
+    h-12
+    cursor-pointer
+    transition
+    transition-all
+    duration-500
+  ;
+
+  &:hover {
+    @apply
+      bg-primary
+    ;
+
+    svg path {
+      fill: white;
+    }
+  }
+
+  &__icon {
+    @apply
+      transition-all
+      transition
+    ;
+  }
+
+  &__container {
+    @apply
+      fixed
+      left-0
+      top-0
+      w-full
+      h-full
+      bg-white
+      rounded-r-xl
+      pt-10
+      transition
+      ease-out
+      duration-300
+      transform
+      -translate-x-full
+      z-10
+    ;
+    max-width: 245px;
+
+    &_active {
+      @apply translate-x-0;
+    }
+  }
+
+  &__layout {
+    @apply
+      fixed
+      left-0
+      top-0
+      h-full
+      w-full
+    ;
+    background: rgba(54, 54, 54, .80);
+  }
+
+  &__button {
+    &_active {
+      @apply text-white bg-primary;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.video {
+  @apply
+    w-full
+    rounded-2xl
+    bg-white
+    z-20
+    relative
+  ;
+
+  max-height: 480px;
+}

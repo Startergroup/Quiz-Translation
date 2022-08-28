@@ -1,0 +1,53 @@
+.button {
+  @apply
+    flex
+    items-center
+    justify-center
+    text-base
+    font-normal
+    rounded-lg
+    w-full
+    h-10
+    bg-transparent
+    cursor-pointer
+    transition
+    transition-all
+    duration-300
+    ease-out
+  ;
+
+  &_empty {
+    @apply
+      text-black
+      font-bold
+      bg-transparent
+    ;
+
+    &:hover {
+      @apply
+        bg-primary
+        text-white
+      ;
+    }
+  }
+
+  &_primary {
+    @apply
+      bg-primary
+      text-white
+    ;
+
+    &:hover {
+      @apply
+        bg-transparent
+        border-2
+        border-primary
+        text-primary
+      ;
+
+      path {
+        stroke: #6C63FF;
+      }
+    }
+  }
+}

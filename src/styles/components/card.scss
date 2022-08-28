@@ -1,0 +1,14 @@
+.card {
+  @apply
+    py-5
+    px-4
+    bg-white
+    rounded-lg
+    shadow-md-y-0
+    w-full
+  ;
+
+  &_md {
+    max-width: 238px;
+  }
+}

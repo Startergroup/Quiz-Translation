@@ -4,6 +4,7 @@
       'button',
       classes
     ]"
+    :title="title"
     @click="$emit('onClick', $event)"
   >
     <slot name="content">
@@ -22,6 +23,10 @@ export default {
     },
     value: {
       type: [String, Number],
+      default: ''
+    },
+    title: {
+      type: [String || Number],
       default: ''
     }
   }

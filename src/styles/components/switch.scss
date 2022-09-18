@@ -31,4 +31,36 @@
       transform: translateX(40px);
     }
   }
+
+  &_sm {
+    @apply
+      h-8
+    ;
+
+    .switch__circle {
+      @apply
+        w-4
+        h-4
+      ;
+
+      &_active {
+        @apply bg-primary;
+        transform: translateX(48px);
+      }
+    }
+  }
+
+  &_dark {
+    @apply
+      bg-black
+    ;
+
+    .switch__circle {
+      @apply bg-white;
+
+      &_active {
+        @apply bg-primary;
+      }
+    }
+  }
 }

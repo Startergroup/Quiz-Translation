@@ -1,29 +1,31 @@
 <template>
   <div class="flex flex-col items-center justify-center w-full h-full px-10 py-10">
-    <Switch
-      class="ml-auto"
-      @update:switch-state="isCinemaMode = $event"
-    >
-      <template #icon>
-        <IconBase
-          name="light"
-          width="16"
-          height="16"
-          stroke-color="#fff"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          :view-box-size="[16, 16]"
-        />
-      </template>
-    </Switch>
+    <div class="overview">
+      <Switch
+        class="ml-auto"
+        @update:switch-state="isCinemaMode = $event"
+      >
+        <template #icon>
+          <IconBase
+            name="light"
+            width="16"
+            height="16"
+            stroke-color="#fff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            :view-box-size="[16, 16]"
+          />
+        </template>
+      </Switch>
 
-    <video src="" class="video mt-4"></video>
+      <Video class="mt-4" />
 
-    <Actions
-      class="mt-4"
-      @switch-schedule="scheduleIsOpen = $event"
-    />
+      <Actions
+        class="mt-4"
+        @switch-schedule="scheduleIsOpen = $event"
+      />
+    </div>
   </div>
 
   <Menu />
@@ -45,6 +47,7 @@ import IconBase from '@/components/Icons/IconBase'
 import Menu from '@/components/Menu'
 import Schedule from '@/components/Schedule'
 import Switch from '@/components/UI/Switch'
+import Video from '@/components/Video'
 
 export default {
   name: 'Home',
@@ -53,7 +56,8 @@ export default {
     IconBase,
     Menu,
     Schedule,
-    Switch
+    Switch,
+    Video
   },
   data () {
     return {

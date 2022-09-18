@@ -29,8 +29,23 @@
       ;
     }
 
+    &_bottom {
+      @apply
+        right-0
+        left-0
+        bottom-0
+        mx-auto
+        rounded-t-xl
+        translate-y-full
+      ;
+      top: inherit;
+      height: 380px;
+      max-width: 1280px;
+    }
+
     &_active {
       @apply translate-x-0;
+      @apply translate-y-0;
     }
   }
 

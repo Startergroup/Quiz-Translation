@@ -1,25 +1,40 @@
 <template>
-  <div
-    class="switch"
-    @click="onChangeState"
-  >
+  <div class="flex flex-row items-center">
+    <slot name="left-text" />
+
     <div
       :class="[
-        'switch__circle',
-        { 'switch__circle_active' : isActive }
+        'switch',
+        classes
       ]"
+      @click="onChangeState"
     >
-      <slot
-        name="icon"
-        :is-active="isActive"
-      />
+      <div
+        :class="[
+          'switch__circle',
+          { 'switch__circle_active' : isActive }
+        ]"
+      >
+        <slot
+          name="icon"
+          :is-active="isActive"
+        />
+      </div>
     </div>
+
+    <slot name="right-text" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'Switch',
+  props: {
+    classes: {
+      type: [Array, String],
+      default: ''
+    }
+  },
   data () {
     return {
       isActive: false

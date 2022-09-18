@@ -4,7 +4,9 @@
       :class="[
         'sidebar__wrapper',
         { 'sidebar__wrapper_active' : isOpen },
-        isLeft ? 'sidebar__wrapper_left' : 'sidebar__wrapper_right'
+        { 'sidebar__wrapper_bottom' : isBottom },
+        { 'sidebar__wrapper_left' : isLeft && !isBottom },
+        { 'sidebar__wrapper_right' : !isLeft && !isBottom }
       ]"
       :style="getComputedStyle"
     >
@@ -26,6 +28,10 @@ export default {
     isOpen: {
       type: Boolean,
       required: true
+    },
+    isBottom: {
+      type: Boolean,
+      default: false
     },
     isLeft: {
       type: Boolean,

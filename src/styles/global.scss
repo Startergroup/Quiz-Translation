@@ -6,3 +6,25 @@ body {
 #app {
   @apply h-screen;
 }
+
+.overview {
+  @apply
+    flex
+    flex-col
+    items-center
+    justify-center
+    w-full
+    h-full
+  ;
+  max-width: 1175px;
+}
+
+.successfully {
+  &_hide {
+    transform: translateY(380px);
+  }
+
+  &_show {
+    transform: translateY(0);
+  }
+}

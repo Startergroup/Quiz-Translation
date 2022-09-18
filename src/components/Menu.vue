@@ -21,6 +21,8 @@
       <div class="flex flex-col w-full pt-10">
         <h2 class="text-2xl font-bold text-black text-center">SQA DAYS <span class="text-primary">/</span> 30</h2>
 
+        <Localization />
+
         <div class="flex flex-col mt-10 pl-6 w-full">
           <Button
             v-for="(item, index) in tabs"
@@ -38,14 +40,15 @@
         </div>
 
         <div class="flex flex-col mt-10 pl-6 w-full">
-          <Button
-            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"
-            value="Настройки"
-          />
+<!--          <Button-->
+<!--            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"-->
+<!--            value="Настройки"-->
+<!--          />-->
 
           <Button
             classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"
-            value="Выйти"
+            :value="$t('message.logout')"
+            @on-click="logoutHandler"
           />
         </div>
       </div>
@@ -56,6 +59,7 @@
 <script>
 import Button from '@/components/UI/Button'
 import IconBase from '@/components/Icons/IconBase'
+import Localization from '@/components/Localization'
 import Sidebar from '@/components/UI/Sidebar'
 
 import { mapActions, mapMutations, mapState } from 'vuex'
@@ -65,6 +69,7 @@ export default {
   components: {
     Button,
     IconBase,
+    Localization,
     Sidebar
   },
   data () {
@@ -78,16 +83,29 @@ export default {
       'selectedTabId'
     ])
   },
+  async updated () {
+    await this.updateTabsHandler()
+  },
   async mounted () {
-    const tabs = await this.getTabs()
-    this.setTabs(tabs)
+    await this.updateTabsHandler()
   },
   methods: {
     ...mapActions(['getTabs']),
+    ...mapActions('auth', [
+      'logout'
+    ]),
     ...mapMutations([
       'setTabs',
       'selectTab'
-    ])
+    ]),
+    logoutHandler () {
+      this.logout()
+      this.$router.push('/auth')
+    },
+    async updateTabsHandler () {
+      const tabs = await this.getTabs()
+      this.setTabs(tabs)
+    }
   }
 }
 </script>

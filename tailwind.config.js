@@ -15,7 +15,8 @@ module.exports = {
         'md-y-0': '0 0 10px rgba(54, 54, 54, .10)'
       },
       spacing: {
-        328: '328px'
+        328: '328px',
+        overwindow: '1000%'
       }
     }
   },

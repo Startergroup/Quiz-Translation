@@ -1,11 +1,28 @@
 .video {
   @apply
+    flex
+    justify-center
+    items-center
     w-full
+    h-full
     rounded-2xl
     bg-white
     z-20
     relative
+    overflow-hidden
   ;
+  max-height: 660px;
 
-  max-height: 480px;
+  &_black {
+    @apply bg-gray-800;
+  }
+
+  iframe, & > div {
+    @apply w-full h-full overflow-hidden;
+  }
+
+  .plyr {
+    @apply w-full;
+    height: inherit;
+  }
 }

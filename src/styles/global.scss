@@ -17,6 +17,10 @@ body {
     h-full
   ;
   max-width: 1175px;
+
+  @media (max-width: 768px) {
+    @apply justify-start;
+  }
 }
 
 .successfully {

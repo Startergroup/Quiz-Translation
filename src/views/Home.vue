@@ -1,8 +1,9 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-full h-full px-10 py-10">
+  <div class="flex flex-col items-center justify-center w-full h-full md:px-10 md:py-10 py-6 px-6">
     <div class="overview">
       <Switch
         class="ml-auto"
+        :classes="{ 'switch_dark' : isCinemaMode }"
         @update:switch-state="isCinemaMode = $event"
       >
         <template #icon>
@@ -19,7 +20,7 @@
         </template>
       </Switch>
 
-      <Video class="mt-4" />
+      <Video class="2xl:mt-4 mt-12" />
 
       <Actions
         class="mt-4"

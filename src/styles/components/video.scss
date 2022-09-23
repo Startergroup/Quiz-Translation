@@ -13,6 +13,10 @@
   ;
   max-height: 660px;
 
+  @media (max-width: 580px) {
+    max-height: 400px;
+  }
+
   &_black {
     @apply bg-gray-800;
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row h-screen w-full">
-    <div class="flex flex-col items-center justify-end h-full w-1/2 bg-transparent px-10">
+    <div class="lg:flex hidden flex-col items-center justify-end h-full w-1/2 bg-transparent px-10">
       <div class="flex flex-col items-center w-full my-auto relative top-14">
         <h2 class="text-6xl font-bold text-black mb-2">SQA DAYS EA <span class="text-primary">/</span> 2</h2>
         <p class="text-lg font-regular text-black text-center">{{ $t('message.title') }}</p>
@@ -13,8 +13,8 @@
       >
     </div>
 
-    <div class="flex flex-col justify-center items-center h-full w-1/2 bg-white relative">
-      <div class="flex flex-col w-328 shadow-md-y-0 px-5 py-6 bg-white rounded-2xl">
+    <div class="flex flex-col justify-center items-center h-full lg:w-1/2 w-full px-4 lg:px-0 bg-white relative">
+      <div class="flex flex-col lg:w-328 w-full max-w-328 shadow-md-y-0 px-5 py-6 bg-white rounded-2xl">
         <h2 class="text-xl font-normal text-black mb-6">{{ $t('message.authTitle') }}</h2>
 
         <div

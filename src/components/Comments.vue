@@ -2,11 +2,11 @@
   <Sidebar
     :is-open="isCommentsOpen"
     :is-bottom="true"
-    width="50%"
+    :width="getCommentsWidth"
     @update:is-open="$emit('update:comments', $event)"
   >
     <template #default>
-      <div class="flex flex-col justify-start items-start w-full px-8 py-6 h-full relative">
+      <div class="flex flex-col justify-start items-start w-full md:px-8 md:py-6 p-4 h-full relative">
         <h1
           class="text-xl font-bold text-primary mb-6"
           @click="hideComment"
@@ -91,7 +91,10 @@ export default {
   computed: {
     ...mapGetters([
       'currentTab'
-    ])
+    ]),
+    getCommentsWidth () {
+      return window.innerWidth > 1024 ? '50%' : '95%'
+    }
   },
   methods: {
     sendComment () {

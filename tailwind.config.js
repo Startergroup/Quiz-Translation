@@ -17,6 +17,12 @@ module.exports = {
       spacing: {
         328: '328px',
         overwindow: '1000%'
+      },
+      maxWidth: {
+        328: '328px'
+      },
+      screens: {
+        sx: '580px'
       }
     }
   },

@@ -18,10 +18,8 @@
     @update:is-open="isOpen = $event"
   >
     <template #default>
-      <div class="flex flex-col w-full pt-10">
-        <h2 class="text-2xl font-bold text-black text-center">SQA DAYS <span class="text-primary">/</span> 30</h2>
-
-        <Localization />
+      <div class="flex flex-col h-full w-full pt-10">
+        <h2 class="text-2xl font-bold text-black text-center">SQA DAYS EA <span class="text-primary">/</span> 2</h2>
 
         <div class="flex flex-col mt-10 pl-6 w-full">
           <Button
@@ -31,7 +29,7 @@
               'button button_empty rounded-l-3xl rounded-r-none justify-start pl-5',
               { 'menu__button_active': selectedTabId === item.id }
             ]"
-            @click="selectTab(item.id)"
+            @click="selectTabHandler(item.id)"
           >
             <template #content>
               {{ item.name }}
@@ -51,6 +49,8 @@
             @on-click="logoutHandler"
           />
         </div>
+
+<!--        <Localization class="mt-auto mb-10" />-->
       </div>
     </template>
   </Sidebar>
@@ -59,7 +59,7 @@
 <script>
 import Button from '@/components/UI/Button'
 import IconBase from '@/components/Icons/IconBase'
-import Localization from '@/components/Localization'
+// import Localization from '@/components/Localization'
 import Sidebar from '@/components/UI/Sidebar'
 
 import { mapActions, mapMutations, mapState } from 'vuex'
@@ -69,7 +69,7 @@ export default {
   components: {
     Button,
     IconBase,
-    Localization,
+    // Localization,
     Sidebar
   },
   data () {
@@ -101,6 +101,10 @@ export default {
     logoutHandler () {
       this.logout()
       this.$router.push('/auth')
+    },
+    selectTabHandler (id) {
+      this.selectTab(id)
+      this.isOpen = false
     },
     async updateTabsHandler () {
       const tabs = await this.getTabs()

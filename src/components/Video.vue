@@ -21,7 +21,7 @@
 
     <span
       v-else
-      class="text-2xl font-semibold text-white"
+      class="sx:text-2xl text-base font-semibold text-white px-4 md:p-0"
     >
       {{ $t('message.videoHint') }}
     </span>

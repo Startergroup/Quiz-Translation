@@ -10,7 +10,8 @@ export default {
     expires: null,
     timer: null,
     code: null,
-    last_activity: null
+    last_activity: null,
+    username: null
   },
   getters: {
     isLogged (state) {
@@ -24,7 +25,8 @@ export default {
         refreshToken: state.refresh_token,
         expires: state.expires,
         code: state.code,
-        lastActivity: state.last_activity
+        lastActivity: state.last_activity,
+        username: state.username
       }))
     },
     setTokens (state, { accessToken, refreshToken, expires }) {
@@ -40,6 +42,9 @@ export default {
     },
     setActivity (state, lastActivity) {
       state.last_activity = lastActivity
+    },
+    setUsername (state, username) {
+      state.username = username
     }
   },
   actions: {
@@ -58,12 +63,14 @@ export default {
               accessToken = null,
               refreshToken = null,
               expires = null,
-              lastActivity = null
+              lastActivity = null,
+              username = null
             }
           } = result
           commit('setCode', code)
           commit('setActivity', lastActivity)
           commit('setTokens', { accessToken, refreshToken, expires })
+          commit('setUsername', username)
           commit('saveState')
 
           return {

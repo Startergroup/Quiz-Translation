@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -13,11 +13,15 @@ export default {
       'timer'
     ])
   },
-  mounted () {
+  async mounted () {
+    const { result: { title, favicon } } = await this.getSettings()
     const authData = localStorage.getItem('streamusUserTokens')
 
+    document.title = title
+    document.querySelector('link[rel="icon"]').setAttribute('href', favicon)
+
     if (authData) {
-      const { accessToken, refreshToken, expires, code, lastActivity } = JSON.parse(authData)
+      const { accessToken, refreshToken, expires, code, lastActivity, username } = JSON.parse(authData)
 
       this.setTokens({
         accessToken,
@@ -26,6 +30,7 @@ export default {
       })
       this.setCode(code)
       this.setActivity(lastActivity)
+      this.setUsername(username)
     } else {
       this.setTokens({
         accessToken: null,
@@ -38,7 +43,11 @@ export default {
     ...mapMutations('auth', [
       'setTokens',
       'setActivity',
-      'setCode'
+      'setCode',
+      'setUsername'
+    ]),
+    ...mapActions([
+      'getSettings'
     ])
   }
 }

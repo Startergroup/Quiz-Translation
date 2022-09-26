@@ -26,6 +26,9 @@ export default createStore({
   actions: {
     async getTabs () {
       return await Api.get(`${apiVersion}/translation/tabs`).then(res => res.result)
+    },
+    async getSettings () {
+      return await Api.get(`${apiVersion}/translation/settings`, { id: 1 })
     }
   },
   modules: {

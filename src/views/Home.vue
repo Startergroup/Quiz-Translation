@@ -3,7 +3,7 @@
     <div class="overview">
       <Switch
         class="ml-auto"
-        :classes="{ 'switch_dark' : isCinemaMode }"
+        :classes="[{ 'switch_dark' : isCinemaMode }]"
         @update:switch-state="isCinemaMode = $event"
       >
         <template #icon>

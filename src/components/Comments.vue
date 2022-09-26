@@ -27,13 +27,14 @@
 
         <div class="flex flex-col w-full items-start">
           <input
-            v-model="username"
+            :value="username"
             type="text"
             :placeholder="$t('message.questionInput')"
             :class="[
-              'input mb-4',
+              'input input_disable mb-4',
               { 'border-red-300' : isEmptyInput }
             ]"
+            disabled
             @focus="isEmptyInput = false"
           >
 
@@ -65,7 +66,7 @@ import Sidebar from '@/components/UI/Sidebar'
 
 import { getDatabase, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Comments',
@@ -83,7 +84,6 @@ export default {
     return {
       isEmptyInput: false,
       isEmptyTextarea: false,
-      username: null,
       comment: null,
       successfully: false
     }
@@ -91,6 +91,9 @@ export default {
   computed: {
     ...mapGetters([
       'currentTab'
+    ]),
+    ...mapState('auth', [
+      'username'
     ]),
     getCommentsWidth () {
       return window.innerWidth > 1024 ? '50%' : '95%'

@@ -7,7 +7,8 @@ import user from './modules/user'
 export default createStore({
   state: {
     tabs: null,
-    selectedTabId: null
+    selectedTabId: null,
+    settings: null
   },
   mutations: {
     setTabs (state, tabs) {
@@ -15,6 +16,9 @@ export default createStore({
     },
     selectTab (state, id) {
       state.selectedTabId = id
+    },
+    setSettings (state, settings) {
+      state.settings = settings
     }
   },
   getters: {
@@ -28,7 +32,7 @@ export default createStore({
       return await Api.get(`${apiVersion}/translation/tabs`).then(res => res.result)
     },
     async getSettings () {
-      return await Api.get(`${apiVersion}/translation/settings`, { id: 1 })
+      return await Api.get(`${apiVersion}/translation/settings`, { id: 2 })
     }
   },
   modules: {

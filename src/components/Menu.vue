@@ -19,7 +19,7 @@
   >
     <template #default>
       <div class="flex flex-col h-full w-full pt-10">
-        <h2 class="text-2xl font-bold text-black text-center">SQA DAYS EA <span class="text-primary">/</span> 2</h2>
+        <h2 v-html="getTitle" class="text-2xl font-bold text-black text-center"></h2>
 
         <div class="flex flex-col mt-10 pl-6 w-full">
           <Button
@@ -81,7 +81,21 @@ export default {
     ...mapState([
       'tabs',
       'selectedTabId'
-    ])
+    ]),
+    ...mapState([
+      'settings'
+    ]),
+    getTitle () {
+      if (!this.settings) return ''
+
+      const { title } = this.settings
+      const currentLocale = title[this.$i18n.locale]
+      console.log(this.$i18n.locale)
+      const str = currentLocale.replace(/[0-9]/g, '').replace(/[^a-zа-яё0-9\s]/gi, '')
+      const num = parseInt(currentLocale.match(/\d+/))
+
+      return `${str}<span class="text-primary">/</span> ${num}`
+    }
   },
   async updated () {
     await this.updateTabsHandler()

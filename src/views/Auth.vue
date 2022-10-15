@@ -2,8 +2,8 @@
   <div class="flex flex-row h-screen w-full">
     <div class="lg:flex hidden flex-col items-center justify-end h-full w-1/2 bg-transparent px-10">
       <div class="flex flex-col items-center w-full my-auto relative top-14">
-        <h2 class="text-6xl font-bold text-black mb-2">SQA DAYS EA <span class="text-primary">/</span> 2</h2>
-        <p class="text-lg font-regular text-black text-center">{{ $t('message.title') }}</p>
+        <h2 v-html="getTitle" class="text-6xl font-bold text-black text-center mb-2"></h2>
+        <p class="text-lg font-regular text-black text-center">{{ getSubtitle }}</p>
       </div>
 
       <img
@@ -67,7 +67,7 @@ import Button from '@/components/UI/Button'
 import LearningIcon from '@/assets/svg/learning.svg'
 import Localization from '@/components/Localization'
 
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Auth',
@@ -81,6 +81,26 @@ export default {
       name: null,
       code: null,
       error: null
+    }
+  },
+  computed: {
+    ...mapState([
+      'settings'
+    ]),
+    getTitle () {
+      if (!this.settings) return ''
+
+      const { title } = this.settings
+      const currentLocale = title[this.$i18n.locale]
+      const str = currentLocale.replace(/[0-9]/g, '').replace(/[^a-zа-яё0-9\s]/gi, '')
+      const num = parseInt(currentLocale.match(/\d+/))
+
+      return `${str}<span class="text-primary">/</span> ${num}`
+    },
+    getSubtitle () {
+      if (!this.settings) return ''
+
+      return this.settings.subtitle[this.$i18n.locale]
     }
   },
   methods: {

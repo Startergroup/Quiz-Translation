@@ -9,6 +9,8 @@ import { initializeApp } from 'firebase/app'
 import { createI18n } from 'vue-i18n'
 import { messages } from './localization'
 
+import { vfmPlugin } from 'vue-final-modal'
+
 import './styles/main.scss'
 
 const i18n = createI18n({
@@ -22,4 +24,6 @@ initializeApp(firebaseConfig)
 app.use(store)
 app.use(router)
 app.use(i18n)
+app.use(vfmPlugin)
+
 app.mount('#app')

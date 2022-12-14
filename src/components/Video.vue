@@ -21,10 +21,12 @@
 
     <span
       v-else
-      class="sx:text-2xl text-base font-semibold text-white px-4 md:p-0"
+      class="sx:text-2xl text-base font-semibold text-white px-4 md:p-0 flex items-center justify-center absolute left-0 top-0 bottom-0 right-0"
     >
       {{ $t('message.videoHint') }}
     </span>
+
+    <slot name="overview" />
   </div>
 </template>
 

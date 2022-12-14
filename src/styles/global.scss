@@ -1,10 +1,12 @@
+@import './variables.scss';
+
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(107.48deg, #ACCBEE -62.67%, #E7F0FD 182.63%);
 }
 
 #app {
-  @apply h-screen;
+  min-height: 100vh;
 }
 
 .overview {
@@ -31,4 +33,22 @@ body {
   &_show {
     transform: translateY(0);
   }
+}
+
+.like-icon {
+  &:hover {
+    path {
+      stroke: #746CFF;
+    }
+  }
+
+  &_active {
+    path {
+      stroke: #746CFF;
+    }
+  }
+}
+
+.max-height-9\/10 {
+  max-height: 90%;
 }

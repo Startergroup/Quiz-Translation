@@ -19,7 +19,12 @@ module.exports = {
         overwindow: '1000%'
       },
       maxWidth: {
-        328: '328px'
+        '64%': '64%',
+        328: '328px',
+        540: '540px'
+      },
+      maxHeight: {
+        '9/10': '90%'
       },
       screens: {
         sx: '580px'

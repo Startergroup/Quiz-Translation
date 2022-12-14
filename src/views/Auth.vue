@@ -120,7 +120,6 @@ export default {
           this.$router.push('/')
         }
       } catch (error) {
-        console.log(1)
         this.error = error
       }
     }

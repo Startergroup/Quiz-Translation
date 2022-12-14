@@ -1,12 +1,12 @@
 <template>
   <Sidebar
-    :is-open="isCommentsOpen"
+    :is-open="isOpen"
     :is-bottom="true"
     :width="getCommentsWidth"
     @update:is-open="$emit('update:comments', $event)"
   >
     <template #default>
-      <div class="flex flex-col justify-start items-start w-full md:px-8 md:py-6 p-4 h-full relative">
+      <div class="flex flex-col justify-start items-start w-full md:px-8 md:py-6 p-4 h-full overflow-hidden relative">
         <h1
           class="text-xl font-bold text-primary mb-6"
           @click="hideComment"
@@ -14,30 +14,7 @@
           {{ $t("message.questionTitle") }}
         </h1>
 
-        <div
-          :class="[
-            'flex justify-center items-center absolute left-0 right-0 top-0 bottom-0 m-auto w-80 h-12 rounded-lg bg-green-500 transition transition-all duration-500 successfully_hide',
-            { 'successfully_show' : successfully }
-          ]"
-        >
-          <span class="text-base font-semibold text-white">
-            {{ $t("message.questionMessage") }}
-          </span>
-        </div>
-
         <div class="flex flex-col w-full items-start">
-          <input
-            :value="username"
-            type="text"
-            :placeholder="$t('message.questionInput')"
-            :class="[
-              'input input_disable mb-4',
-              { 'border-red-300' : isEmptyInput }
-            ]"
-            disabled
-            @focus="isEmptyInput = false"
-          >
-
           <textarea
             v-model="comment"
             :class="[
@@ -55,6 +32,19 @@
             @on-click="sendComment"
           />
         </div>
+
+        <div v-show="successfully" class="absolute left-0 top-0 w-full h-full bg-gray-900 opacity-80"></div>
+
+        <div
+          :class="[
+            'flex justify-center items-center absolute left-0 right-0 top-0 bottom-0 m-auto w-80 h-12 rounded-lg bg-green-500 transition transition-all duration-500 successfully_hide',
+            { 'successfully_show' : successfully }
+          ]"
+        >
+          <span class="text-base font-semibold text-white">
+            {{ $t("message.questionMessage") }}
+          </span>
+        </div>
       </div>
     </template>
   </Sidebar>
@@ -66,7 +56,7 @@ import Sidebar from '@/components/UI/Sidebar'
 
 import { getDatabase, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Comments',
@@ -75,14 +65,13 @@ export default {
     Sidebar
   },
   props: {
-    isCommentsOpen: {
+    isOpen: {
       type: Boolean,
       required: true
     }
   },
   data: () => {
     return {
-      isEmptyInput: false,
       isEmptyTextarea: false,
       comment: null,
       successfully: false
@@ -92,17 +81,13 @@ export default {
     ...mapGetters([
       'currentTab'
     ]),
-    ...mapState('auth', [
-      'username'
-    ]),
     getCommentsWidth () {
       return window.innerWidth > 1024 ? '50%' : '95%'
     }
   },
   methods: {
     sendComment () {
-      if (!(this.username && this.comment)) {
-        this.isEmptyInput = !this.username
+      if (!this.comment) {
         this.isEmptyTextarea = !this.comment
 
         return false
@@ -116,7 +101,6 @@ export default {
       const date = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })
 
       set(ref(db, `${this.currentTab.name}/${uuidv4()}`), {
-        username: this.username,
         comment: this.comment,
         date: date
       })
@@ -124,10 +108,8 @@ export default {
       this.showSuccessMessage()
 
       this.comment = null
-      this.username = null
     },
     hideComment () {
-      this.isEmptyInput = false
       this.isEmptyTextarea = false
     },
     showSuccessMessage () {

@@ -1,8 +1,10 @@
 import { createStore } from 'vuex'
 import Api from '@/api/api'
 import { apiVersion } from '@/api/api.config'
+
 import auth from './modules/auth'
-import user from './modules/user'
+import quiz from './modules/quiz'
+import vote from './modules/vote'
 
 export default createStore({
   state: {
@@ -37,6 +39,7 @@ export default createStore({
   },
   modules: {
     auth,
-    user
+    quiz,
+    vote
   }
 })

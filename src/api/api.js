@@ -16,7 +16,7 @@ class Api {
     const result = await this.#client({
       method,
       headers: {
-        Authorization: `Bearer ${store.state.auth.access_token}`
+        Authorization: `Bearer ${store.state.auth.user.token.accessToken}`
       },
       url,
       params,

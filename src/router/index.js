@@ -8,7 +8,10 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: Auth
+    component: Auth,
+    meta: {
+      protected: false
+    }
   },
   {
     path: '/',

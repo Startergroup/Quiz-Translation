@@ -5,46 +5,42 @@ import router from '../../router'
 export default {
   namespaced: true,
   state: {
-    access_token: null,
-    refresh_token: null,
-    expires: null,
     timer: null,
-    code: null,
-    last_activity: null,
-    username: null
+    user: {}
   },
   getters: {
     isLogged (state) {
-      return Boolean(state.access_token && state.refresh_token && state.expires)
+      const {
+        user: {
+          token: {
+            accessToken = null,
+            refreshToken = null,
+            expires = null
+          }
+        }
+      } = state
+
+      return Boolean(accessToken && refreshToken && expires)
     }
   },
   mutations: {
-    saveState (state) {
-      localStorage.setItem('streamusUserTokens', JSON.stringify({
-        accessToken: state.access_token,
-        refreshToken: state.refresh_token,
-        expires: state.expires,
-        code: state.code,
-        lastActivity: state.last_activity,
-        username: state.username
-      }))
+    setActivity (state, lastActivity) {
+      state.user.lastActivity = lastActivity
     },
-    setTokens (state, { accessToken, refreshToken, expires }) {
-      state.access_token = accessToken
-      state.refresh_token = refreshToken
-      state.expires = expires
+    setCode (state, code) {
+      state.user.code = code
+    },
+    saveState (state) {
+      localStorage.setItem('streamusUserData', JSON.stringify(state.user))
     },
     setTimer (state, timer) {
       state.timer = timer
     },
-    setCode (state, code) {
-      state.code = code
+    setTokens (state, tokens) {
+      state.user.token = tokens
     },
-    setActivity (state, lastActivity) {
-      state.last_activity = lastActivity
-    },
-    setUsername (state, username) {
-      state.username = username
+    setUser (state, user) {
+      state.user = user
     }
   },
   actions: {
@@ -58,27 +54,17 @@ export default {
         })
 
         if (result.success) {
-          const {
-            result: {
-              accessToken = null,
-              refreshToken = null,
-              expires = null,
-              lastActivity = null,
-              username = null
-            }
-          } = result
-          commit('setCode', code)
-          commit('setActivity', lastActivity)
-          commit('setTokens', { accessToken, refreshToken, expires })
-          commit('setUsername', username)
+          const { user } = result
+
+          commit('setUser', user)
           commit('saveState')
 
           return {
-            success: result.success
+            success: true
           }
         } else {
           return {
-            success: result.success,
+            success: false,
             message: result.error
           }
         }
@@ -87,13 +73,25 @@ export default {
       }
     },
     async checkTokens ({ commit, state }) {
-      const expire = state.expire
+      if (!Object.keys(state.user).length) {
+        commit('setTokens', {
+          accessToken: null,
+          refreshToken: null,
+          expires: null
+        })
+        await router.push('/auth')
+      }
+
+      console.log(1)
+
+      const { token: { expire, refresh_token: refresh = null } } = state.user
       const now = new Date().getTime()
 
       if (expire - now < 0) {
         const tokens = await Api.post(`${baseURL}/v2/user/auth/refresh-token`, {
           data: {
-            refreshToken: state.refresh_token
+            code: state.user.code,
+            refreshToken: refresh
           }
         })
           .then(res => res.data)
@@ -113,7 +111,7 @@ export default {
     async updateActivity ({ state, commit }) {
       const { lastActivity } = await Api.put(`${apiVersion}/user/auth/last_activity`, {
         data: {
-          code: state.code
+          code: state.user.code
         }
       })
 

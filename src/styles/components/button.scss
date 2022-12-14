@@ -23,31 +23,74 @@
       bg-transparent
     ;
 
-    &:hover {
-      @apply
+    @media (min-width: 768px) {
+      &:hover:not(.button_non-hover) {
+        @apply
+          bg-primary
+          text-white
+        ;
+      }
+    }
+
+    @media (max-width: 768px) {
+      &:focus:not(.button_non-hover),
+      &:active:not(.button_non-hover) {
+        @apply
         bg-primary
         text-white
-      ;
+        ;
+      }
     }
+  }
+
+  &_secondary {
+    @apply bg-secondary text-white;
   }
 
   &_primary {
     @apply
+      border-2
+      border-primary
       bg-primary
       text-white
     ;
 
-    &:hover {
-      @apply
+    @media (min-width: 768px) {
+      &:hover:not(.button_disable):not(.button_non-hover) {
+        @apply
+          bg-transparent
+          border-2
+          border-primary
+          text-primary
+        ;
+
+        path {
+          stroke: #6C63FF;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      &:focus:not(.button_disable):not(.button_non-hover),
+      &:active:not(.button_disable):not(.button_non-hover) {
+        @apply
         bg-transparent
         border-2
         border-primary
         text-primary
-      ;
+        ;
 
-      path {
-        stroke: #6C63FF;
+        path {
+          stroke: #6C63FF;
+        }
       }
     }
+  }
+
+  &_disable {
+    @apply
+      bg-gray-300
+      border-gray-300
+    ;
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <modals-container></modals-container>
 </template>
 
 <script>
@@ -15,9 +16,27 @@ export default {
     document.title = title[this.$i18n.locale]
     document.querySelector('link[rel="icon"]').setAttribute('href', favicon)
   },
+  created () {
+    const userData = localStorage.getItem('streamusUserData')
+
+    if (userData) {
+      const user = JSON.parse(userData)
+      this.setUser(user)
+    } else {
+      this.setTokens({
+        accessToken: null,
+        refreshToken: null,
+        expires: null
+      })
+    }
+  },
   methods: {
     ...mapMutations([
       'setSettings'
+    ]),
+    ...mapMutations('auth', [
+      'setTokens',
+      'setUser'
     ]),
     ...mapActions([
       'getSettings'

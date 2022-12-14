@@ -20,50 +20,148 @@
         </template>
       </Switch>
 
-      <Video class="2xl:mt-4 mt-12" />
+      <Video class="2xl:mt-4 mt-12">
+        <template #overview>
+          <Quizlet
+            v-if="selectedQuiz"
+            :quizlet="selectedQuiz"
+            :is-finished="isPassed"
+            @finish-quizlet="finishQuiz($event)"
+          >
+            <template #introductionForm="{ startQuizlet }">
+              <IntroductionForm
+                :start-quizlet="startQuizlet"
+                :username="user.username"
+              />
+            </template>
+          </Quizlet>
+        </template>
+      </Video>
 
       <Actions
         class="mt-4"
-        @switch-schedule="scheduleIsOpen = $event"
+        @open:comments="isCommentsOpen = $event"
+        @open:quiz="onOpenQuizzes($event)"
       />
     </div>
   </div>
 
   <Menu />
 
-  <Schedule
-    :is-open="scheduleIsOpen"
-    @switch-schedule="scheduleIsOpen = $event"
+  <Comments
+    :is-open="isCommentsOpen"
+    @update:comments="isCommentsOpen = $event"
+  />
+
+  <Quizzes
+    :is-open="isQuizOpen"
+    @update:quiz="isQuizOpen = $event"
   />
 
   <div
-    v-show="isCinemaMode"
-    class="cinema-mode"
+    :class="[
+      'cinema-mode',
+      { 'cinema-mode_active' : isCinemaMode }
+    ]"
   ></div>
 </template>
 
 <script>
 import Actions from '@/components/Actions'
+import Comments from '@/components/Comments'
 import IconBase from '@/components/Icons/IconBase'
+import IntroductionForm from '@/components/Quiz/IntroductionForm'
+import Quizlet from '@/components/Quiz/Quizlet'
+import Quizzes from '@/components/Quizzes'
 import Menu from '@/components/Menu'
-import Schedule from '@/components/Schedule'
 import Switch from '@/components/UI/Switch'
 import Video from '@/components/Video'
+
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     Actions,
+    Comments,
     IconBase,
+    IntroductionForm,
+    Quizlet,
+    Quizzes,
     Menu,
-    Schedule,
     Switch,
     Video
   },
   data () {
     return {
-      scheduleIsOpen: false,
-      isCinemaMode: false
+      isCinemaMode: false,
+      isCommentsOpen: false,
+      isQuizOpen: false,
+      quizzes: null
+    }
+  },
+  computed: {
+    ...mapState('auth', [
+      'user'
+    ]),
+    ...mapState('quiz', {
+      isPassed: state => state.isPassed
+    }),
+    ...mapGetters([
+      'currentTab'
+    ]),
+    ...mapGetters('quiz', [
+      'selectedQuiz'
+    ]),
+    getComputedStyle () {
+      if (!this.selectedQuiz) return {}
+
+      return {
+        background: this.selectedQuiz.bgColor
+      }
+    }
+  },
+  methods: {
+    ...mapActions('quiz', [
+      'getQuizzes',
+      'getUserQuiz',
+      'updateUserQuiz'
+    ]),
+    ...mapMutations('quiz', [
+      'setQuizzes'
+    ]),
+    async finishQuiz (result) {
+      const { id: quizId, time, answers } = result
+
+      const { success, message = null } = await this.updateUserQuiz({
+        code: this.user.code,
+        userId: this.user.id,
+        username: this.user.username,
+        quizId,
+        time,
+        answers
+      })
+
+      if (!success) {
+        alert(message)
+      }
+    },
+    async onOpenQuizzes (state) {
+      this.isQuizOpen = state
+
+      const { id } = this.user
+      const quizzes = await this.getQuizzes()
+
+      for (let i = 0; i < quizzes.length; i++) {
+        const item = quizzes[i]
+
+        item.isPassed = await this.getUserQuiz({
+          quizId: item.id,
+          userId: id
+        }).then(res => res.isPassed)
+      }
+
+      this.setQuizzes(quizzes)
     }
   }
 }

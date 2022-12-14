@@ -1,0 +1,15 @@
+@import '../variables';
+
+.question {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 24px;
+
+  &__h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}

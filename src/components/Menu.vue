@@ -18,7 +18,7 @@
     @update:is-open="isOpen = $event"
   >
     <template #default>
-      <div class="flex flex-col h-full w-full pt-10">
+      <div class="flex flex-col w-full py-10">
         <h2 v-html="getTitle" class="text-2xl font-bold text-black text-center"></h2>
 
         <div class="flex flex-col mt-10 pl-6 w-full">
@@ -38,19 +38,12 @@
         </div>
 
         <div class="flex flex-col mt-10 pl-6 w-full">
-<!--          <Button-->
-<!--            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"-->
-<!--            value="Настройки"-->
-<!--          />-->
-
           <Button
-            classes="button button_empty rounded-l-3xl rounded-r-none justify-start pl-5"
+            classes="button font-semibold rounded-l-3xl rounded-r-none justify-start pl-5 hover:bg-red-400 hover:text-white"
             :value="$t('message.logout')"
             @on-click="logoutHandler"
           />
         </div>
-
-<!--        <Localization class="mt-auto mb-10" />-->
       </div>
     </template>
   </Sidebar>
@@ -59,7 +52,6 @@
 <script>
 import Button from '@/components/UI/Button'
 import IconBase from '@/components/Icons/IconBase'
-// import Localization from '@/components/Localization'
 import Sidebar from '@/components/UI/Sidebar'
 
 import { mapActions, mapMutations, mapState } from 'vuex'
@@ -69,7 +61,6 @@ export default {
   components: {
     Button,
     IconBase,
-    // Localization,
     Sidebar
   },
   data () {
@@ -90,7 +81,6 @@ export default {
 
       const { title } = this.settings
       const currentLocale = title[this.$i18n.locale]
-      console.log(this.$i18n.locale)
       const str = currentLocale.replace(/[0-9]/g, '').replace(/[^a-zа-яё0-9\s]/gi, '')
       const num = parseInt(currentLocale.match(/\d+/))
 
